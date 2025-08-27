@@ -90,8 +90,11 @@ Now compare files manually using:
 cmp large_file.bin parent_received.bin
 If no output, files are identical.
 
+Cleaning up temporary files...
+Cleanup completed.
+
 Comparison Command : cmp large_file.bin parent_received.bin
-Output : empty - This means files are identical
+Output should be empty indicating files are identical
 */
 
 #include <stdio.h>
@@ -300,6 +303,11 @@ int main() {
     printf("\nNow compare files manually using:\n");
     printf("cmp large_file.bin parent_received.bin\n");
     printf("If no output, files are identical.\n");
-   
+
+    printf("\nCleaning up temporary files...\n");
+    unlink(CHILD_FILE);
+    unlink(FINAL_FILE);
+    printf("Cleanup completed.\n");
+
     return 0;
 }
