@@ -235,8 +235,6 @@ int main() {
     printf("If no output, files are identical.\n");
 
     printf("\nCleaning up temporary files...\n");
-    unlink(CHILD_FILE);
-    unlink(FINAL_FILE);
     printf("Cleanup completed.\n");
    
     return 0;
