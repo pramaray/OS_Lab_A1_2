@@ -8,11 +8,12 @@ Team Members : Rishika Sur (002311001025)
 Date: 7th August, 2025      
               
 Assignment: IPC using Named Pipe (FIFO)
+
 Description: 
 Using the fork system call, create a Child Process.. Transfer 1GB file
 from the Parent Process to Child Process using a FIFO. Now, transfer
 the same file from the Child Process to the Parent Process using
-another FIFO. Now, compare the two files(use cmp or diff command)
+another FIFO. Now, compare the two files (use cmp or diff command)
 to make sure that the same file has returned back. Also, print the time
 required to do this double transfer. Attach this output to the source file
 as a comment.
@@ -20,40 +21,47 @@ To create FIFO, you can either use a shell command or a system call.
 To create a large file you can use the relevant command.
 Use ‘ls –l’ command to show the FIFO and the large file. Attach this
 output to the source file as a comment.
-Make sure that the starting comment block has all the necessary
-information attached.
-
 
 Command: dd if=/dev/zero of=large_file.bin bs=1M count=1024
 Output:
 1024+0 records in
 1024+0 records out
 1073741824 bytes (1.1 GB, 1.0 GiB) copied, 0.319966 s, 3.4 GB/s
-Command: gcc A1_02_2B.c -o A1_02_2B
-Command: mkfifo fifo1 fifo2
-Command: ls -l
-Output:
-total 1048716
--rw-rw-r-- 1 adminpc adminpc       3149 Aug  7 12:35 A1_02_2B.c
-prw-rw-r-- 1 adminpc adminpc          0 Aug  7 12:37 fifo1
-prw-rw-r-- 1 adminpc adminpc          0 Aug  7 12:37 fifo2
--rw-rw-r-- 1 adminpc adminpc 1073741824 Aug  7 12:36 large_file.bin
 
-Execution Command: ./A1_02_2B 
-Output: 
+Command: gcc A1_02_2B.c -o A1_02_2B
+         mkfifo fifo1 fifo2
+         ls -l
+Output:
+total 3145832
+-rw-r--r-- 1 rahul rahul      16864 Aug 27 15:16 A1_02_1A.sh
+-rw-r--r-- 1 rahul rahul       4956 Aug 27 15:16 A1_02_1B.c
+-rw-r--r-- 1 rahul rahul       2294 Aug 27 15:16 A1_02_2A.c
+-rw-r--r-- 1 rahul rahul       9356 Aug 27 15:16 A1_02_2B.c
+-rwxr-xr-x 1 rahul rahul      16968 Aug 27 15:40 A1_02_2B
+-rw-r--r-- 1 rahul rahul       4327 Aug 27 15:16 A1_02_3.py
+-rw-r--r-- 1 rahul rahul       8985 Aug 27 15:16 A1_02_4.c
+-rw-r--r-- 1 rahul rahul 1073741824 Aug 27 15:40 child_received.bin
+prw-r--r-- 1 rahul rahul          0 Aug 27 15:40 fifo1
+prw-r--r-- 1 rahul rahul          0 Aug 27 15:40 fifo2
+-rw-r--r-- 1 rahul rahul 1073741824 Aug 27 15:18 large_file.bin
+-rw-r--r-- 1 rahul rahul 1073741824 Aug 27 15:40 parent_received.bin
+
+Execution Command: ./A1_02_2B
+Output:
+
 Robust 1GB FIFO File Transfer Program
 =====================================
 
 Starting 1GB file transfer...
 File info:
--rw-rw-r-- 1 adminpc adminpc 1.0G Aug  7 12:56 large_file.bin
+-rw-r--r-- 1 rahul rahul 1.0G Aug 27 15:18 large_file.bin
 
 Step 1: Parent sends 1GB file to Child via fifo1
 Parent: Sending 1GB file...
 Child: Ready to receive 1GB file...
 Transferring dataReceiving data.................... Done
-Parent: Sent 1073741824 bytes (1024.00 MB)
  Done
+Parent: Sent 1073741824 bytes (1024.00 MB)
 Child: Received 1073741824 bytes (1024.00 MB)
 Step 1 completed successfully
 
@@ -66,25 +74,26 @@ Child: Sent 1073741824 bytes back (1024.00 MB)
 Parent: Received 1073741824 bytes back (1024.00 MB)
 Step 2 completed successfully
 
-File Comparison:
-================
-SUCCESS: Files are identical!
 
 Performance Results:
 ===================
-Transfer time: 0.804 seconds
+Transfer time: 1.647 seconds
 Data transferred: 2048 MB (1024MB x 2)
-Average rate: 2547.3 MB/s
+Average rate: 1243.8 MB/s
 
 Final file verification:
--rw-rw-r-- 1 adminpc adminpc 1.0G Aug  7 12:56 child_received.bin
--rw-rw-r-- 1 adminpc adminpc 1.0G Aug  7 12:56 large_file.bin
--rw-rw-r-- 1 adminpc adminpc 1.0G Aug  7 12:56 parent_received.bin
+-rw-r--r-- 1 rahul rahul 1.0G Aug 27 15:40 child_received.bin
+-rw-r--r-- 1 rahul rahul 1.0G Aug 27 15:18 large_file.bin
+-rw-r--r-- 1 rahul rahul 1.0G Aug 27 15:40 parent_received.bin
 
-Cleaning up temporary files...
-Cleanup completed.
+Now compare files manually using:
+cmp large_file.bin parent_received.bin
+If no output, files are identical.
 
+Comparison Command : cmp large_file.bin parent_received.bin
+Output : empty - This means files are identical
 */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -101,6 +110,7 @@ Cleanup completed.
 #define FIFO1 "fifo1"
 #define FIFO2 "fifo2"
 
+// Function to send file through FIFO
 long transfer_file_send(const char* src_file, const char* fifo_name) {
     FILE* src = fopen(src_file, "rb");
     if (!src) {
@@ -149,6 +159,7 @@ long transfer_file_send(const char* src_file, const char* fifo_name) {
     return total_sent;
 }
 
+// Function to receive file through FIFO
 long transfer_file_receive(const char* dst_file, const char* fifo_name) {
     int fifo_fd = open(fifo_name, O_RDONLY);
     if (fifo_fd == -1) {
@@ -203,7 +214,7 @@ int main() {
    
     if (access(ORIGINAL_FILE, R_OK) != 0) {
         printf("Error: %s not found.\n", ORIGINAL_FILE);
-        printf("Create with: dd if=/dev/urandom of=%s bs=1M count=1024\n", ORIGINAL_FILE);
+        printf("Create with: dd if=/dev/zero of=%s bs=1M count=1024\n", ORIGINAL_FILE);
         return 1;
     }
    
@@ -277,46 +288,23 @@ int main() {
     end_time = clock();
     double elapsed = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
    
-    printf("File Comparison:\n");
-    printf("================\n");
-   
-    if (system("cmp -s large_file.bin parent_received.bin") == 0) {
-        printf("SUCCESS: Files are identical!\n");
-    } else {
-        printf("FAILURE: Files differ!\n");
-        printf("File sizes:\n");
-        system("ls -lh large_file.bin parent_received.bin");
-        system("wc -c large_file.bin parent_received.bin");
-    }
-   
     printf("\nPerformance Results:\n");
     printf("===================\n");
     printf("Transfer time: %.3f seconds\n", elapsed);
     printf("Data transferred: 2048 MB (1024MB x 2)\n");
     printf("Average rate: %.1f MB/s\n", 2048.0 / elapsed);
-   
+
     printf("\nFinal file verification:\n");
     system("ls -lh large_file.bin child_received.bin parent_received.bin");
-   
+
+    printf("\nNow compare files manually using:\n");
+    printf("cmp large_file.bin parent_received.bin\n");
+    printf("If no output, files are identical.\n");
+
+
     printf("\nCleaning up temporary files...\n");
-    unlink(CHILD_FILE);
-    unlink(FINAL_FILE);
     printf("Cleanup completed.\n");
+
    
     return 0;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
