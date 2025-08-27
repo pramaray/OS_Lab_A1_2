@@ -300,11 +300,6 @@ int main() {
     printf("\nNow compare files manually using:\n");
     printf("cmp large_file.bin parent_received.bin\n");
     printf("If no output, files are identical.\n");
-
-
-    printf("\nCleaning up temporary files...\n");
-    printf("Cleanup completed.\n");
-
    
     return 0;
 }
