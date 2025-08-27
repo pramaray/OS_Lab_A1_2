@@ -171,11 +171,11 @@ int main(int argc, char *argv[]) {
             close(fileDesc);
             exit(EXIT_FAILURE);
         }
-
-        usleep(50000);
+     
     }
 
     close(fileDesc);
     return 0;
 }
+
 
