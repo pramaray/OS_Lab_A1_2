@@ -2,7 +2,7 @@
  ============================================================================
  Group No     : A1
  Team No      : 02
- Team Members : Rishika Sur (002311001026)
+ Team Members : Rishika Sur (002311001025)
               : Vidhi Mantry (002311001043)
               : Prama Ray (002311001033)
               
