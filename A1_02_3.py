@@ -39,19 +39,129 @@ Output :
     - Matrix A, Matrix B, and Result Matrix C (if printSwitch == 1)
     - Time taken for matrix multiplication
 
+Before Execution run:
+    pip install numpy 
+
 Execution :
     python A1_02_3.py <dim> <numThreads> <mod> <printSwitch>
+  
 
-Example :  python A1_02_3.py 3000 4 1000 1
+Timing Measurements for Matrix Multiplication (Dimension x Dimension, Mod Value)
+  - Dimension: 3000
+  - Mod Value: 1000
+  - Number of Processes (1):  68.5151 seconds
+  - Number of Processes (2):  34.8077 seconds
+  - Number of Processes (4):  19.5800 seconds
+  - Number of Processes (8):  14.7509 seconds     
+    
+Sample Input 1:  python3 A1_02_3.py 3000 1 1000 1
 
-Sample Output:
-    Matrix multiplication completed in 0.1234 seconds with 4 threads.
-    Matrix A:
-    [[…]]
-    Matrix B:
-    [[…]]
-    Result Matrix C:
-    [[…]]
+Sample Output 1:
+    Matrix multiplication completed in 68.5151 seconds with 1 threads.
+Matrix A:
+[[375 820 289 ... 911 773 565]
+ [645 965 863 ... 427 282  67]
+ [438 405 176 ...  99 230 679]
+ ...
+ [235 908 554 ... 846 410 786]
+ [ 88 370 119 ... 974 328 237]
+ [348 402 100 ... 692 307 978]]
+Matrix B:
+[[772 845 501 ...  96 519  98]
+ [134 474 569 ... 782 898 778]
+ [ 57 882 612 ... 621 900 743]
+ ...
+ [802 416 282 ... 830 667 458]
+ [330 533 946 ...   7 760 679]
+ [323 350 710 ...  12 656 294]]
+Result Matrix C:
+[[775377476 756917141 768712588 ... 739095242 744195181 768762794]
+ [787535992 783689502 775915121 ... 756845957 763547867 784160734]
+ [758046656 748790884 760190275 ... 728319385 743098057 756768453]
+ ...
+ [753699816 740551497 756631050 ... 722547738 736763317 755885275]
+ [762877570 752531759 760207448 ... 721373989 742452719 752396741]
+ [780792132 768273327 778803567 ... 751784861 758276357 772179120]]
+
+CPU Utilisation for Input 1:
+Command: cpustat 
+Output:
+  %CPU   %USR   %SYS     PID S  CPU    Time Task
+100.00 100.00   0.00   13183 R   11   1.04m python3
+  1.00   0.00   1.00     572 S    9  41.12s [irq/162-rtw88_p]
+
+  %CPU   %USR   %SYS     PID S  CPU    Time Task
+100.00 100.00   0.00   13183 R   11   1.05m python3
+  4.00   4.00   0.00    4807 S    4   2.23m /usr/share/code/code
+
+  %CPU   %USR   %SYS     PID S  CPU    Time Task
+100.00 100.00   0.00   13183 R   11   1.06m python3
+  5.00   4.00   1.00    4807 S    4   2.23m /usr/share/code/code
+
+Sample Input 2:  python3 A1_02_3.py 3000 2 1000 0
+
+Sample Output 2: 
+ Matrix multiplication completed in 34.8077 seconds with 2 threads.
+
+CPU Utilisation for Input 2:
+Command: cpustat 
+Output:
+  %CPU   %USR   %SYS     PID S  CPU    Time Task
+100.00 100.00   0.00   14137 R   10  31.47s python3
+100.00 100.00   0.00   14136 R    4  31.57s python3
+  4.00   4.00   0.00    4807 S    9   2.56m /usr/share/code/code
+
+  %CPU   %USR   %SYS     PID S  CPU    Time Task
+100.00 100.00   0.00   14137 R   10  32.47s python3
+100.00 100.00   0.00   14136 R    4  32.57s python3
+  2.00   2.00   0.00    4807 S    9   2.56m /usr/share/code/code
+
+  %CPU   %USR   %SYS     PID S  CPU    Time Task
+100.00 100.00   0.00   14137 R   10  33.47s python3
+100.00 100.00   0.00   14136 R    4  33.57s python3
+  2.00   1.00   1.00    4807 S    9   2.56m /usr/share/code/code
+  
+Sample Input 3:  python3 A1_02_3.py 3000 4 1000 0
+
+Sample Output 3: 
+ Matrix multiplication completed in 19.5800 seconds with 4 threads.
+
+CPU Utilisation for Input 3:
+Command: cpustat 
+Output:  
+  %CPU   %USR   %SYS     PID S  CPU    Time Task
+100.00 100.00   0.00   14656 R    3  16.74s python3
+100.00 100.00   0.00   14654 R    4  16.94s python3
+100.00 100.00   0.00   14655 R    6  16.85s python3
+100.00 100.00   0.00   14653 R    9  17.01s python3
+ 18.00  17.00   1.00    4807 S   10   3.17m /usr/share/code/code 
+
+  %CPU   %USR   %SYS     PID S  CPU    Time Task
+100.00 100.00   0.00   14656 R    3  17.74s python3
+100.00 100.00   0.00   14654 R    4  17.94s python3
+100.00 100.00   0.00   14655 R    6  17.85s python3
+100.00 100.00   0.00   14653 R    9  18.01s python3
+ 13.00  13.00   0.00    4807 S   10   3.17m /usr/share/code/code
+
+Sample Input 4:  python3 A1_02_3.py 3000 8 1000 0
+
+Sample Output 4: 
+ Matrix multiplication completed in 14.7509 seconds with 8 threads.
+
+CPU Utilisation for Input 4:
+Command: cpustat 
+Output:    
+
+    %CPU   %USR   %SYS     PID S  CPU    Time Task
+100.00 100.00   0.00   16188 R    3   3.62s python3
+100.00 100.00   0.00   16185 R    0   3.88s python3
+100.00 100.00   0.00   16192 R   10   3.13s python3
+100.00 100.00   0.00   16187 R    9   3.70s python3
+100.00 100.00   0.00   16191 R    6   3.27s python3
+100.00 100.00   0.00   16190 R    5   3.41s python3
+100.00 100.00   0.00   16189 R    7   3.52s python3
+100.00 100.00   0.00   16186 R   11   3.80s python3
+  7.00   7.00   0.00    4807 S   10   3.49m /usr/share/code/code
 ============================================================================
 """
 
