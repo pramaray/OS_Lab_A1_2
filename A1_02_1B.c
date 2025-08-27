@@ -10,13 +10,13 @@
  * 
  * The program uses:
  * - getenv() to fetch the values of various environment variables like USER, HOME, HOST, etc.
- * - setenv() to set two new environment variables MY_VAR and MY_NAME.
+ * - setenv() to set two new environment variables NEW_USER and NEW_HOST.
  * 
  * Input: None
  * 
  * Output:
  * - Displays the values of environment variables: USER, HOME, HOST, ARCH, DISPLAY, PRINTER, PATH.
- * - Sets two new environment variables MY_VAR and MY_NAME and displays them.
+ * - Sets two new environment variables NEW_USER and NEW_HOST and displays them.
  * 
  * Note: The program requires two command-line arguments to set the new environment variables.
  * Usage:  
@@ -54,9 +54,8 @@ int main(int argc, char *argv[])
 {
     // Array of predefined environment variables to display
     const char *predefined_env_vars[] = {"USER", "HOME", "HOST", "ARCH", "DISPLAY", "PRINTER", "PATH"};
-    // Calculate the number of predefined environment variables
     const int predefined_var_count = sizeof(predefined_env_vars) / sizeof(predefined_env_vars[0]);
-    int i;  // Variable to iterate through environment variables
+    int i; 
 
     // Display program header
     printf("\nProgram to GET and SET Environment Variables\n");
@@ -119,5 +118,6 @@ int main(int argc, char *argv[])
             printf("%s is not set or empty\n", new_env_vars[i]);
     }
 
-    return 0; // Exit the program successfully
+    return 0; 
 }
+
