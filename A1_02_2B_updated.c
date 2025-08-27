@@ -22,9 +22,74 @@ Use ‘ls –l’ command to show the FIFO and the large file. Attach this
 output to the source file as a comment.
 
 Command: dd if=/dev/zero of=large_file.bin bs=1M count=1024
+Output:
+1024+0 records in
+1024+0 records out
+1073741824 bytes (1.1 GB, 1.0 GiB) copied, 0.319966 s, 3.4 GB/s
+Command: gcc A1_02_2B.c -o A1_02_2B
 Command: mkfifo fifo1 fifo2
-Command to compile: gcc A1_02_2B.c -o A1_02_2B
+Command: ls -l
+Output:
+total 3145832
+-rw-r--r-- 1 rahul rahul      16864 Aug 27 15:16 A1_02_1A.sh
+-rw-r--r-- 1 rahul rahul       4956 Aug 27 15:16 A1_02_1B.c
+-rw-r--r-- 1 rahul rahul       2294 Aug 27 15:16 A1_02_2A.c
+-rw-r--r-- 1 rahul rahul       9356 Aug 27 15:16 A1_02_2B.c
+-rwxr-xr-x 1 rahul rahul      16968 Aug 27 15:40 A1_02_2B
+-rw-r--r-- 1 rahul rahul       4327 Aug 27 15:16 A1_02_3.py
+-rw-r--r-- 1 rahul rahul       8985 Aug 27 15:16 A1_02_4.c
+-rw-r--r-- 1 rahul rahul 1073741824 Aug 27 15:40 child_received.bin
+prw-r--r-- 1 rahul rahul          0 Aug 27 15:40 fifo1
+prw-r--r-- 1 rahul rahul          0 Aug 27 15:40 fifo2
+-rw-r--r-- 1 rahul rahul 1073741824 Aug 27 15:18 large_file.bin
+-rw-r--r-- 1 rahul rahul 1073741824 Aug 27 15:40 parent_received.bin
+
 Execution Command: ./A1_02_2B
+Output:
+
+Robust 1GB FIFO File Transfer Program
+=====================================
+
+Starting 1GB file transfer...
+File info:
+-rw-r--r-- 1 rahul rahul 1.0G Aug 27 15:18 large_file.bin
+
+Step 1: Parent sends 1GB file to Child via fifo1
+Parent: Sending 1GB file...
+Child: Ready to receive 1GB file...
+Transferring dataReceiving data.................... Done
+ Done
+Parent: Sent 1073741824 bytes (1024.00 MB)
+Child: Received 1073741824 bytes (1024.00 MB)
+Step 1 completed successfully
+
+Step 2: Child sends 1GB file back to Parent via fifo2
+Parent: Ready to receive 1GB file back...
+Child: Sending 1GB file back...
+Transferring dataReceiving data.................... Done
+Child: Sent 1073741824 bytes back (1024.00 MB)
+ Done
+Parent: Received 1073741824 bytes back (1024.00 MB)
+Step 2 completed successfully
+
+
+Performance Results:
+===================
+Transfer time: 1.647 seconds
+Data transferred: 2048 MB (1024MB x 2)
+Average rate: 1243.8 MB/s
+
+Final file verification:
+-rw-r--r-- 1 rahul rahul 1.0G Aug 27 15:40 child_received.bin
+-rw-r--r-- 1 rahul rahul 1.0G Aug 27 15:18 large_file.bin
+-rw-r--r-- 1 rahul rahul 1.0G Aug 27 15:40 parent_received.bin
+
+Now compare files manually using:
+cmp large_file.bin parent_received.bin
+If no output, files are identical.
+
+Comparison Command : cmp large_file.bin parent_received.bin
+Output : empty - This means files are identical
 */
 
 #include <stdio.h>
@@ -234,8 +299,10 @@ int main() {
     printf("cmp large_file.bin parent_received.bin\n");
     printf("If no output, files are identical.\n");
 
+
     printf("\nCleaning up temporary files...\n");
     printf("Cleanup completed.\n");
+
    
     return 0;
 }
