@@ -87,10 +87,8 @@ Final file verification:
 -rw-r--r-- 1 rahul rahul 1.0G Aug 27 15:40 parent_received.bin
 
 Now compare files manually using:
+cmp large_file.bin parent_received.bin
 If no output, files are identical.
-
-Cleaning up temporary files...
-Cleanup completed.
 
 Comparison Command : cmp large_file.bin parent_received.bin
 Output should be empty indicating files are identical
@@ -300,13 +298,11 @@ int main() {
     system("ls -lh large_file.bin child_received.bin parent_received.bin");
 
     printf("\nNow compare files manually using:\n");
-    system("cmp large_file.bin parent_received.bin\n");
+    printf("cmp large_file.bin parent_received.bin\n");
     printf("If no output, files are identical.\n");
 
-    printf("\nCleaning up temporary files...\n");
-    unlink(CHILD_FILE);
-    unlink(FINAL_FILE);
-    printf("Cleanup completed.\n");
+    
+    
 
     return 0;
 }
