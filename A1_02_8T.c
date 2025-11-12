@@ -25,25 +25,27 @@ Output:
 1024+0 records out
 1073741824 bytes (1.1 GB, 1.0 GiB) copied, 0.324293 s, 3.3 GB/s
 
+Compile Command: gcc A1_02_8T.c -o A1_02_8T
+
 Command: mkfifo fifo1 fifo2 fifo3
          ls -l
 Output:
 total 2479976
--rw-rw-r-- 1 adminpc adminpc 1073741824 Oct 30 12:23 large_file.bin
-prw-rw-r-- 1 adminpc adminpc          0 Oct 30 12:21 fifo1
-prw-rw-r-- 1 adminpc adminpc          0 Oct 30 12:21 fifo2
-prw-rw-r-- 1 adminpc adminpc          0 Oct 30 12:21 fifo3
-
-Compile Command: gcc A1_02_8T.c -o A1_02_8T
+-rw-rw-r-- 1 adminpc adminpc 1073741824 Oct 30 12:21 large_file.bin
+prw-rw-r-- 1 adminpc adminpc          0 Oct 30 12:22 fifo1
+prw-rw-r-- 1 adminpc adminpc          0 Oct 30 12:22 fifo2
+prw-rw-r-- 1 adminpc adminpc          0 Oct 30 12:22 fifo3
+-rw-rw-r-- 1 adminpc adminpc      10195 Oct 30 12:21 A1_02_8T.c
+-rw-rw-r-- 1 adminpc adminpc      17832 Oct 30 12:21 A1_02_8T
 
 Execution Command: ./A1_02_8T
 Output:
 
-Triple FIFO File Transfer Program (No Intermediate Files)
+Triple FIFO File Transfer Program 
 ==========================================================
 
 File info:
--rw-rw-r-- 1 adminpc adminpc 1.0G Oct 30 12:23 large_file.bin
+-rw-rw-r-- 1 adminpc adminpc 1.0G Oct 30 12:21 large_file.bin
 
 Starting triple transfer...
 
@@ -59,8 +61,8 @@ Data transferred: 3072 MB (1024MB x 3)
 Average throughput: 2629.1 MB/s
 
 Final file verification:
--rw-rw-r-- 1 adminpc adminpc 1.0G Oct 30 12:23 large_file.bin
--rw-rw-r-- 1 adminpc adminpc 1.0G Oct 30 12:26 parent_received.bin
+-rw-rw-r-- 1 adminpc adminpc 1.0G Oct 30 12:21 large_file.bin
+-rw-rw-r-- 1 adminpc adminpc 1.0G Oct 30 12:23 parent_received.bin
 
 Now compare files manually using:
 cmp large_file.bin parent_received.bin
@@ -69,7 +71,7 @@ If no output, files are identical.
 Comparison command: cmp large_file.bin parent_received.bin
 Output:
 
-Output is empty indicating files are identical
+Output is empty indicating files are identical.
 
 ===============================================================================================================
 */
@@ -246,7 +248,7 @@ int main() {
     pid_t child1_pid, child2_pid;
     struct timeval start_time, end_time;
    
-    printf("\nTriple FIFO File Transfer Program (No Intermediate Files)\n");
+    printf("\nTriple FIFO File Transfer Program \n");
     printf("==========================================================\n\n");
    
     // Check if source file exists
@@ -356,7 +358,7 @@ int main() {
     printf("\nNow compare files manually using:\n");
     printf("cmp large_file.bin parent_received.bin\n");
     printf("If no output, files are identical.\n");
-    
+
     return 0;
 }
 	
