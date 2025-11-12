@@ -119,7 +119,7 @@ Sample Output:
 
     Command : ./A1_02_6 3000 8 100 0
     Matrix multiplication completed in 23.4053 seconds with 8 threads.
-    
+
     CPU Utilisation : cpustat
 
     %CPU   %USR   %SYS     PID S  CPU    Time Task
