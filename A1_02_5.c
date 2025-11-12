@@ -152,13 +152,11 @@ void *thread_C(void *arg) {
     int i;
     for (i = 0; i < N; i++) {
         pthread_barrier_wait(&start_barrier);  // start together
-
-        /* Wait until A and B are computed for this row */
+        
+		/* Wait until A and B are computed for this row */
         while (!(rows[i].a_done && rows[i].b_done)) {
-            /* Small sleep to avoid busy spinning */
-            struct timespec ts = {0, 1000000}; // 1 ms
-            nanosleep(&ts, NULL);
-        }
+             sched_yield();  // yield CPU briefly instead of sleeping
+		}
 
         if (rows[i].A == 0) {
             rows[i].C = INFINITY;  // or NAN
@@ -269,7 +267,7 @@ int main(int argc, char *argv[]) {
         perror("pthread_create Th3");
         return EXIT_FAILURE;
     }
-    system("ipcs");
+    system("ipcs -m");
     /* Wait for all threads to finish */
     pthread_join(th1, NULL);
     pthread_join(th2, NULL);
